@@ -24,7 +24,7 @@ fi
 
 cd ~/Desktop;
 installerFolder="installer_$(date -d "today" +"%Y%m%d%H%M%S")";
-mkdir $installerFolder
+mkdir $installerFolder;
 
 # ********************** PHP version 5.6.20 **********************
 file='php.zip';
