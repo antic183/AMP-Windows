@@ -24,7 +24,7 @@ fi
 
 cd ~/Desktop;
 installerFolder="installer_$(date -d "today" +"%Y%m%d%H%M%S")";
-mkdir $installerFolder
+mkdir $installerFolder;
 
 # ********************** MySQL 5.6 **********************
 cd ~/Desktop/$installerFolder;
@@ -46,10 +46,30 @@ rm -rf "mysql-extract";
 cd "$savePath/bin";
 ./mysqld --install
 
-sleep 2
+# start mysql service:
+sc start mysql;
 
-mysqladmin -u root password 1234
+sleep 3;
+cd ~/Desktop;
+rm -rf $installerFolder;
+
+# change root password:
+echo "Please enter your mysql password for root user: ";
+read -s mysqlPassword;
+mysqladmin -u root password $mysqlPassword;
+
+sleep 2;
 
 echo "finish!";
 sleep 5;
 exit;
+
+# __ remove mysql user without password (use for below code the window command prompt):
+# 1. mysql -u root -p $mysqlPassword;
+# 2. delete from mysql.user where user.user="" && user.password="" LIMIT 1;
+# 3. quit;
+
+# __ uninstall mysql: 
+# open command prompt with admin privilliges,  
+# 1. Stop and remove the mysql serive "sc stop mysql", "sc delete mysql". 
+# 2. Then delete the savePath "rm -rf $savePath".
